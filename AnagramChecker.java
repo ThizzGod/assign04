@@ -19,5 +19,8 @@ public class AnagramChecker {
 	public static String[] getLargestAnagramGroup(String filename) {
 		return null;
 	}
-}
 
+	public static boolean areAnagrams(String string1, String string2) {
+		return false;
+	}
+}
