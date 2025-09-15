@@ -99,4 +99,26 @@ class AnagramCheckerTester {
         String[] group = AnagramChecker.getLargestAnagramGroup(new String[]{});
         assertEquals(0, group.length);
     }
+    
+    @Test
+    void testGetLargestAnagramGroupFromFile() {
+        String[] group = AnagramChecker.getLargestAnagramGroup(wordList);
+    	String[] largestGroupFile = AnagramChecker.getLargestAnagramGroup("word-list.txt");
+    	assertTrue(largestGroupFile.length == group.length); 
+    	for(int i = 0; i < group.length; i++) {
+    		assertEquals(largestGroupFile[i], group[i]);
+    	}
+    }
+    
+    @Test
+    void testGetLargestAnagramGroupFromFileFileEmpty() {
+    	String[] largestGroupStrings = AnagramChecker.getLargestAnagramGroup("empty.txt");
+    	assertTrue(largestGroupStrings.length == 0);
+    }
+    
+    @Test
+    void testGetLargestAnagramGroupFromFileFileDNE() {
+    	String[] largestGroupStrings = AnagramChecker.getLargestAnagramGroup("DNE.txt");
+    	assertTrue(largestGroupStrings.length == 0);
+    }
 }
