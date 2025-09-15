@@ -2,6 +2,8 @@ package assign04;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.concurrent.atomic.AtomicIntegerArray;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,6 +25,8 @@ class AnagramCheckerTester {
 
         smallAnagramGroup = new String[]{"eat", "tea", "Ate"};
         noAnagrams = new String[]{"caller", "gallery", "traders"};
+        
+        
     }
    
 
@@ -120,5 +124,13 @@ class AnagramCheckerTester {
     void testGetLargestAnagramGroupFromFileFileDNE() {
     	String[] largestGroupStrings = AnagramChecker.getLargestAnagramGroup("DNE.txt");
     	assertTrue(largestGroupStrings.length == 0);
+    }
+    
+    @Test
+    void testInsertionSortGenericWithInteger() {
+    	Integer[] arr = {8,3,8,2,5};
+    	AnagramChecker.insertionSort(arr, (i1, i2) -> i1.compareTo(i2));
+    	assertEquals(arr[1], 3);
+    	assertEquals(arr[3], 8);
     }
 }
