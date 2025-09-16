@@ -5,19 +5,80 @@ import java.util.Comparator;
 public class AnagramChecker {
 
 	public static String sort(String string) {
-		return null;
+		char[] stringArray = string.toLowerCase().toCharArray();
+		Character[] charArray = new Character[stringArray.length];
+		for (int i = 0; i < stringArray.length; i++) {
+			charArray[i] = (Character) stringArray[i];
+		}
+		AnagramChecker.insertionSort(charArray, (c1, c2) -> ((Character) c1).compareTo((Character)c2) );
+		for (int i = 0; i < stringArray.length; i++) {
+			stringArray[i] = (char) charArray[i];
+		}
+		String sortedString = String.valueOf(stringArray);
+		return sortedString;
 	}
 	
 	public static <T> void insertionSort(T[] arr, Comparator<? super T> cmp) {
+		int current = 1;
+		int previous = 0;
+		
+		for (int i = 1; i <= arr.length; i++ ) {
+			while ((previous >= 0) && (cmp.compare(arr[current], arr[previous]) < 0)) {
+				T placeholder = arr[current];
+				arr[current] = arr[previous];
+				arr[previous] = placeholder;
+				current--;
+				previous--;
+			}
+			current = i;
+			previous = i - 1;
+		}
 		
 	}
 	
 	public static String[] getLargestAnagramGroup(String[] stringArray) {
-		return null;
+		AnagramComparator cmp = new AnagramComparator();
+		insertionSort(stringArray, cmp);
+		int longest = 0;
+		int longestStart = 0;
+		for (int i = 0; i < stringArray.length - 1; i++) {
+			int longestSoFar = 0;
+			
+			if (areAnagrams(stringArray[i], stringArray[i+1])) {
+				longestSoFar++;
+			}
+			if (longestSoFar > longest) {
+				longest = longestSoFar;
+			}
+		}
+		String[] largestGroup = new String[longest];
+		for (int i = 0; i < longest; i++) {
+			largestGroup[i] = stringArray[i + longestStart];
+		}
+		return largestGroup;
 	}
 	
 	public static String[] getLargestAnagramGroup(String filename) {
 		return null;
 	}
-}
 
+	public static boolean areAnagrams(String string1, String string2) {
+		String leftString = sort(string1);
+		String rightString = sort(string2);
+		if (leftString.equals(rightString)) {
+			return true;
+		}
+		return false;
+	}
+	
+	private static class AnagramComparator implements Comparator<String> {
+		public int compare(String s1, String s2) {
+			if (areAnagrams(s1, s2)) {
+				return 1;
+			}
+			else {
+				return -1;
+			}
+		}
+	}
+}
