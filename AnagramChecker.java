@@ -10,7 +10,7 @@ public class AnagramChecker {
 		for (int i = 0; i < stringArray.length; i++) {
 			charArray[i] = (Character) stringArray[i];
 		}
-		AnagramChecker.insertionSort(charArray, (c1, c2) -> ((Character) c1).compareTo((Character)c2) );
+		AnagramChecker.insertionSort(charArray, (c1, c2) -> ( c1).compareTo(c2) );
 		for (int i = 0; i < stringArray.length; i++) {
 			stringArray[i] = (char) charArray[i];
 		}
@@ -39,23 +39,24 @@ public class AnagramChecker {
 	public static String[] getLargestAnagramGroup(String[] stringArray) {
 		AnagramComparator cmp = new AnagramComparator();
 		insertionSort(stringArray, cmp);
-		int longest = 0;
-		int longestStart = 0;
+		int currentStreak = 1;
+		int longestStreak = 0;
+		int streakStart = 0;
+		
 		for (int i = 0; i < stringArray.length - 1; i++) {
-			int longestSoFar = 0;
-			
 			if (areAnagrams(stringArray[i], stringArray[i+1])) {
-				longestSoFar++;
-			}
-			if (longestSoFar > longest) {
-				longest = longestSoFar;
-			}
+				currentStreak++;
+			} else if (currentStreak > longestStreak) {
+				longestStreak = currentStreak;
+				streakStart = i - (currentStreak - 1);
+				currentStreak = 1;
+			} else currentStreak = 1;
 		}
-		String[] largestGroup = new String[longest];
-		for (int i = 0; i < longest; i++) {
-			largestGroup[i] = stringArray[i + longestStart];
+		String[] largestGroup = new String[longestStreak];
+		for (int i = 0; i < largestGroup.length; i++) {
+			largestGroup[i] = stringArray[i + streakStart];
 		}
-		return largestGroup;
+ 		return largestGroup;
 	}
 	
 	public static String[] getLargestAnagramGroup(String filename) {
