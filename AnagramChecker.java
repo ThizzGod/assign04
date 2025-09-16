@@ -46,6 +46,9 @@ public class AnagramChecker {
 		for (int i = 0; i < stringArray.length - 1; i++) {
 			if (areAnagrams(stringArray[i], stringArray[i+1])) {
 				currentStreak++;
+				if (currentStreak == stringArray.length) {
+					longestStreak = currentStreak;
+				}
 			} else if (currentStreak > longestStreak) {
 				longestStreak = currentStreak;
 				streakStart = i - (currentStreak - 1);
@@ -53,6 +56,7 @@ public class AnagramChecker {
 			} else currentStreak = 1;
 		}
 		String[] largestGroup = new String[longestStreak];
+		if (longestStreak == 1) largestGroup = new String[0];
 		for (int i = 0; i < largestGroup.length; i++) {
 			largestGroup[i] = stringArray[i + streakStart];
 		}
